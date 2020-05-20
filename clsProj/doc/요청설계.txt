@@ -1,0 +1,125 @@
+---------------------------------------------------------------
+1. 메인 폼 요청
+	요청내용: / 또는 /main.cls
+	파라미터: 무
+	컨트롤러: com.increpas.www.controller.MainController
+	뷰		: /main.jsp
+---------------------------------------------------------------
+1. 로그인 폼 요청
+	요청내용: /member/login.cls
+	파라미터: 무
+	컨트롤러: com.increpas.www.controller.member.LoginForm
+	뷰		: /member/Login.jsp
+---------------------------------------------------------------
+2. 로그인 처리 요청
+	요청내용: /member/loginProc.cls
+	파라미터: id, pw
+	컨트롤러: com.increpas.www.controller.member.LoginProc
+	뷰		: redirect(
+---------------------------------------------------------------
+---------------------------------------------------------------
+# 회원가입 폼 요청
+	요청내용: 
+	파라미터: 
+	컨트롤러: com.increpas.www.controller.
+	뷰		: 
+---------------------------------------------------------------
+---------------------------------------------------------------
+# 방명록 폼 요청
+	요청내용: 
+	파라미터: 
+	컨트롤러: com.increpas.www.controller.
+	뷰		: 
+---------------------------------------------------------------
+# 방명록 처리 요청
+	요청내용: 
+	파라미터: 
+	컨트롤러: com.increpas.www.controller.
+	뷰		: 
+---------------------------------------------------------------
+# 방명록 쓰기 폼 요청
+	요청내용: 
+	파라미터: 
+	컨트롤러: com.increpas.www.controller.
+	뷰		: 
+---------------------------------------------------------------
+# 댓글게시판 폼 요청
+	요청내용: /reBoard/reBoard.cls
+	파라미터: nowPage
+	컨트롤러: com.increpas.www.controller.reBoard.ReBoardList
+	뷰		: /reBoard/reBoard.jsp
+---------------------------------------------------------------
+# 댓글게시판 글입력 폼보기 처리 요청
+	요청내용: /reBoard/reBoardWrite.cls
+	파라미터: 무
+	컨트롤러: com.increpas.www.controller.reBoard.ReBoardWrite
+	뷰		: /reBoard/reBoardWrite.jsp
+---------------------------------------------------------------
+# 댓글게시판 댓글입력 폼보기 처리 요청
+	요청내용: /reBoard/reBoardReply.cls
+	파라미터: nowPage
+	컨트롤러: com.increpas.www.controller.reBoard.ReBoardReply
+	뷰		: /reBoard/reBoardReply.jsp
+---------------------------------------------------------------
+# 댓글게시판 댓글입력 처리 요청
+	요청내용: /reBoard/reBoardRplProc.cls
+	파라미터: nowPage, body
+	컨트롤러: com.increpas.www.controller.reBoard.ReBoardRplProc
+	뷰		: /reBoard/reBoardRplRedirect.jsp
+---------------------------------------------------------------
+# 댓글게시판 게시글 쓰기 처리 요청
+	요청내용: /reBoard/reBoardProc.cls
+	파라미터: reno, mno, body, upno
+	컨트롤러: com.increpas.www.controller.reBoard.
+	뷰		: 
+---------------------------------------------------------------
+# 댓글게시판 게시글 수정 요청
+	요청내용: /reBoard/reBoardEdit.cls
+	파라미터: reno, body
+	컨트롤러: com.increpas.www.controller.reBoard.
+	뷰		: 
+---------------------------------------------------------------
+# 댓글게시판 게시글 삭제 요청
+	요청내용: /reBoard/reBoardDel.cls
+	파라미터: reno
+	컨트롤러: com.increpas.www.controller.reBoard.
+	뷰		: 
+---------------------------------------------------------------
+---------------------------------------------------------------
+# 설문게시판 요청 처리
+1. 설문지 보기 처리 요청
+	요청내용: /survey/survey.cls
+	파라미터: 무
+	컨트롤러: com.increpas.www.controller.survey.Survey
+	뷰		: /survey/survey.jsp
+---------------------------------------------------------------
+2. 설문응답 처리 요청
+	요청내용: /survey/surveyProc.cls
+	파라미터: sno, sino, sack
+	컨트롤러: com.increpas.www.controller.survey.SurveyProc
+	뷰		: redirect: /clsProj/survey/surveyResult.cls
+---------------------------------------------------------------
+3. 설문 결과 처리 요청
+	요청내용: /survey/surveyResult.cls
+	파라미터: 무
+	컨트롤러: com.increpas.www.controller.survey.SurveyResult
+	뷰		: redirect: /survey/surveyResult.jsp
+---------------------------------------------------------------
+4. 설문 등록 뷰 보기 요청
+	요청내용: /survey/surveyAdd.cls
+	파라미터: 무
+	컨트롤러: com.increpas.www.controller.survey.SurveyAddForm
+	뷰		: /survey/surveyAdd.jsp
+---------------------------------------------------------------
+5. 설문 정보 등록 처리 요청
+	요청내용: /survey/surveyInfoProc.ck		(ajax처리)
+	파라미터: sibody, sistart, siend
+	컨트롤러: com.increpas.www.controller.survey.SurveyInfoProc
+	뷰		: 무(json data)
+---------------------------------------------------------------
+6. 설문 문항 등록 처리 요청
+	요청내용: /survey/surveyQAProc.ck
+	파라미터: sino, sq, sa1, sa2, sa3, sa4
+	컨트롤러: com.increpas.www.controller.survey.SurveyQAProc
+	뷰		: redirect(: /survey/surveyAdd.cls)
+---------------------------------------------------------------
