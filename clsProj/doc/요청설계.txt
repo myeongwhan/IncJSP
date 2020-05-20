@@ -123,3 +123,30 @@
 	컨트롤러: com.increpas.www.controller.survey.SurveyQAProc
 	뷰		: redirect(: /survey/surveyAdd.cls)
 ---------------------------------------------------------------
+---------------------------------------------------------------
+
+# 게시판 요청 처리
+1. 게시판 리스트보기 처리 요청
+	요청내용: /board/board.cls
+	파라미터: nowPage
+	컨트롤러: com.increpas.www.controller.board.BoardList
+	뷰		: /board/boardList.jsp
+---------------------------------------------------------------
+2. 게시판 작성 뷰 보기 처리 요청
+	요청내용: /board/boardWrite.cls
+	파라미터: 무
+	컨트롤러: com.increpas.www.controller.board.BoardWrite
+	뷰		: /board/boardWrite.jsp
+---------------------------------------------------------------
+3. 게시판 작성 처리 요청
+	요청내용: /board/boardWrite.cls
+	파라미터: 무
+	컨트롤러: com.increpas.www.controller.board.BoardWrite
+	뷰		: /board/boardWrite.jsp
+---------------------------------------------------------------
+4. 게시판 작성 처리 요청
+	요청내용: /board/boardDetail.cls
+	파라미터: 
+	컨트롤러: com.increpas.www.controller.board.BoardDetail
+	뷰		: /board/boardDetail.jsp
+---------------------------------------------------------------
