@@ -192,8 +192,12 @@ public class BoardDAO {
 			String key = (String) en.nextElement();
 			// 해당 키값을 가지고 있는 파일 이름을 알아낸다
 			String oriname = multi.getOriginalFileName(key);
+//			System.out.println("key : " + key);
+//			System.out.println("oriname : " + oriname);
 			if(oriname == null || oriname.length() == 0) {
 				// 이 경우는 파일을 선택하지 않은 경우이므로 다음 회차로 진행한다
+//				System.out.println("야야야야 여기로 오긴 하냐");
+				
 				continue;
 			}
 			

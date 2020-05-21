@@ -12,16 +12,17 @@
 </style>
 <script type="text/javascript" src="/clsProj/js/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
-	var cnt = 2;
+	var cnt = 1;
 	
-	function setNum(){
+	function setNum(cnt){
 		cnt = cnt + 1;
+		return cnt;
 	}
-	var tag1 = '<input class="file w3-input w3-border" type="file" name="file"'+ cnt +'">';
 	
 	function addTg(){
+		cnt = setNum(cnt);
+		var tag1 = '<input class="file w3-input w3-border" type="file" name="file'+ cnt +'">';
 		$('.box').append(tag1);
-		setNum();
 		$('.box > input').last().change(function(){
 			addTg();
 		});
@@ -34,6 +35,7 @@
 		});
 		
 		$('.file').change(function(){
+			alert(cnt);
 			addTg();
 			//alert(cnt);
 		})

@@ -28,7 +28,7 @@
 			} else {
 				$('#nowPage').val(bstr);
 			}
-			$('#frm').attr('action', '/clsProj/board/boardDetail.cls');
+			$('#frm').attr('action', '/clsProj/board/board.cls');
 			$('#frm').submit();
 		});
 		
