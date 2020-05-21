@@ -18,13 +18,38 @@
 			$(location).attr('href', '/clsProj/board/boardWrite.cls');
 		});
 		
-		$('#text').click(function(){
-			$(location).attr('href', '/clsProj/board/boardDetail.cls');
-		})
+		$('.pbtn').click(function(){
+			// 어떤 버튼이 클릭됐는지 알아낸다
+			var bstr = $(this).html();
+			if(bstr == 'PRE'){
+				$('#nowPage').val('${PAGE.startPage - 1}');
+			} else if(bstr == 'NEXT'){
+				$('#nowPage').val('${PAGE.endPage + 1}');
+			} else {
+				$('#nowPage').val(bstr);
+			}
+			$('#frm').attr('action', '/clsProj/board/boardDetail.cls');
+			$('#frm').submit();
+		});
+		
+		$('.content').click(function(){
+			var sno = $(this).attr('id');
+			$('#bno').val(sno);
+			$('#nowPage').val('${PAGE.nowPage}')	// 상세보기에서 목록으로 돌아갈 때 쓰임
+			$('#frm').attr('action', '/clsProj/board/boardDetailProc.cls');
+			$('#frm').submit();
+		});
+		
 	});
+	
 </script>
 </head>
 <body>
+    <form method="post" action="" id="frm">
+    	<input type="hidden" name="nowPage" id="nowPage">
+    	<input type="hidden" name="bno" id="bno">
+    </form>
+    
     <div class="w3-content mxw">
         <div class="w3-center w3-col ">
             <h2>인크레파스 게시판</h2>
@@ -43,14 +68,14 @@
                   <th>조회수</th>
                 </tr>
               </thead>
-              <c:forEach var="data" items="${LIST }">
-	              <!-- ì¬ê¸°ì ë°ë³µë¬¸ì ìì±íì¸ì-->
-	              <tr class="w3-text-gray" id="text">
+	              <!-- 여기에 반복문을 작성하세요 -->
+              <c:forEach var="data" items="${LIST}">
+	              <tr class="w3-text-gray content" id="${data.bno}">
 	                <td>${data.bno }</td>
 	                <!-- 1 -->
 	                <td>${data.title }</td>
 	                <!-- 제목입니다 -->
-	                <td>${data.id }</td>
+	                <td>${data.name }</td>
 	                <!-- 홍길동 -->
 	                <td>${data.sdate }</td>
 	                <!-- 2020/05/20 -->
@@ -58,9 +83,28 @@
 	                <!-- 0 -->
 	              </tr>
               </c:forEach>
-              <!--ì¬ê¸°ê¹ì§-->
+              <!--여기까지-->
             </table>
         </div>
+        <div>
+			<div class="w3-bar w3-center">
+				<c:if test="${PAGE.startPage lt (PAGE.pageGroup + 1) }">
+				<span class="ww3-light-gray">PRE</span>
+				</c:if>
+				<c:if test="${PAGE.startPage ge (PAGE.pageGroup + 1) }">
+				<span class="w3-button w3-blue pbtn">PRE</span>
+				</c:if>
+			  <c:forEach var="pageNO" begin="${PAGE.startPage}" end="${PAGE.endPage}">
+				  <span class="w3-button w3-blue pbtn">${pageNO}</span>
+			  </c:forEach>
+			  <c:if test="${PAGE.endPage ne PAGE.totalPage }">
+			  <span class="w3-button w3-blue pbtn">NEXT</span>
+			  </c:if>
+			  <c:if test="${PAGE.endPage eq PAGE.totalPage }">
+			  <span class="w3-light-gray">NEXT</span>
+			  </c:if>
+			</div>
+		</div>
       </div>
 </body>
 </html>

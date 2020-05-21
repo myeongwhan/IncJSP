@@ -14,7 +14,7 @@
 <script type="text/javascript">
 	$(function(){
 		$('#board').click(function(){
-			$(location).attr('href', '/clsProj/board/board.cls');
+			$('#frm').submit();
 		});
 		$('#home').click(function(){
 			$(location).attr('href', '/clsProj/main.cls');
@@ -23,6 +23,23 @@
 </script>
 </head>
 <body>
+	<form method="post" action="/clsProj/board/board.cls" id="frm">
+		<input type="hidden" name="nowPage" id="nowPage" value="${nowPage }">
+		<input type="hidden" name="bno" value="${DATA.bno }">
+		<input type="hidden" name="title" value="${DATA.title }">
+		<input type="hidden" name="body" value="${DATA.body }">
+		<input type="hidden" name="name" value="${DATA.name }">
+		<input type="hidden" name="click" value="${DATA.click }">
+		<input type="hidden" name="sdate" value="${DATA.sdate }">
+		
+		<c:if test="${DATA.file.get(0).bino ne 0 }">
+			<c:forEach var="data" items="${DATA.file }">
+			<input type="hidden" name="bino" value="${data.bino }">
+			<input type="hidden" name="oriname" value="${data.oriname }">
+			<input type="hidden" name="savename" value="${data.savename }">
+			</c:forEach>
+		</c:if>
+	</form>
     <div class="w3-content" style="max-width: 1000px;">
         <div class="w3-center w3-col ">
             <h2>상세보기페이지</h2>
@@ -34,7 +51,7 @@
             </div>
             <div class="w3-row w3-margin-top">
                 <div class="w3-card w3-padding w3-center">
-                    <h2>제목</h2>
+                    <h2>${DATA.title }</h2>
                 </div>
             </div>
             <div class="w3-row w3-margin-top">
@@ -42,24 +59,26 @@
                     <div style="display: flex;">
                         <div class="w3-margin-right" style="display: flex;">
                             <p class="w3-margin-right">작성자:</p>
-                            <p class="w3-border-right" style="height: 25px; padding-right: 20px;">홍길동</p>        
+                            <p class="w3-border-right" style="height: 25px; padding-right: 20px;">${DATA.name }</p>        
                         </div>
                         <div class="w3-margin-right" style="display: flex;">
                             <p class="w3-margin-right">작성일:</p>
-                            <p class="w3-border-right" style="height: 25px; padding-right: 20px;">2020/05/20</p>        
+                            <p class="w3-border-right" style="height: 25px; padding-right: 20px;">${DATA.sdate }</p>        
                         </div>     
                     </div>
                     <div style="display: flex;">                        
-                        <p class="w3-margin-right" style="margin-top: 0px;">파일다운</p>                     
-                        <a class="w3-margin-right" href="">링크1</a>                                                   
-                        <a class="w3-margin-right" href="">링크1</a>                                                   
-                        <a class="w3-margin-right" href="">링크1</a>                                                   
+                        <c:if test="${not empty DATA.file}">
+	                        <p class="w3-margin-right" style="margin-top: 0px;">파일다운</p>                     
+	                        <c:forEach var="pic" items="${DATA.file }" varStatus="st">
+	                        	<a class="w3-margin-right" href="/clsProj/brdimg/${pic.savename }">링크${st.count }</a>                                                   
+	                        </c:forEach>
+                        </c:if>
                     </div>
                 </div>
             </div>
             <div class="w3-row w3-margin-top">
                 <div class="w3-card w3-padding mih w3-margin-bottom" style="min-height: 700px;">
-                    <div>본문내용</div>
+                    <div>${DATA.body }</div>
                 </div>
             </div>
         </div>

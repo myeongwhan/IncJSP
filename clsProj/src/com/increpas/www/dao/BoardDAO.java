@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import com.increpas.www.DB.CLSDBCP;
 import com.increpas.www.sql.BoardSQL;
+import com.increpas.www.util.PageUtil;
 import com.increpas.www.vo.BoardVO;
 import com.increpas.www.vo.FileVO;
 import com.oreilly.servlet.MultipartRequest;
@@ -26,6 +27,119 @@ public class BoardDAO {
 	public BoardDAO() {
 		db = new CLSDBCP();
 		bSQL = new BoardSQL();
+	}
+	
+	// 총 게시물 수 조회 전담처리 함수
+	public int getTotal() {
+		int cnt = 0;
+		con = db.getCon();
+		String sql = bSQL.getSQL(bSQL.SEL_TOTAL_CNT);
+		stmt = db.getStmt(con);
+		try {
+			rs = stmt.executeQuery(sql);
+			rs.next();
+			cnt = rs.getInt("cnt");
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(rs);
+			db.close(stmt);
+			db.close(con);
+		}
+		
+		return cnt;
+	}
+	
+	// 게시판 등록글 가져오기 전담처리 함수
+	public ArrayList<BoardVO> getAllList(PageUtil page){
+		ArrayList<BoardVO> list = new ArrayList<BoardVO>();
+		con = db.getCon();
+		String sql = bSQL.getSQL(bSQL.SEL_ALL_LIST);
+		pstmt = db.getPstmt(con, sql);
+		try {
+			pstmt.setInt(1, page.getStartCont());
+			pstmt.setInt(2, page.getEndCont());
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				BoardVO bVO = new BoardVO();
+				bVO.setRno(rs.getInt("rno"));
+				bVO.setBno(rs.getInt("bno"));
+				bVO.setTitle(rs.getString("title"));
+				bVO.setName(rs.getString("name"));
+				bVO.setbDate(rs.getDate("bDate"));
+				bVO.setbTime(rs.getTime("bDate"));
+				bVO.setSdate();
+				bVO.setClick(rs.getInt("click"));
+				
+				list.add(bVO);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(rs);
+			db.close(pstmt);
+			db.close(con);
+		}
+		
+		return list;
+	}
+	
+	// 글 번호로 검색한 해당 글 가져오기 전담처리 함수
+	public BoardVO getContent(int bno) {
+		BoardVO bVO = new BoardVO();
+		con = db.getCon();
+		String sql = bSQL.getSQL(bSQL.EDIT_CLICK_BRD);
+		pstmt = db.getPstmt(con, sql);
+		int cnt = 0;
+		try {
+			pstmt.setInt(1, bno);
+			cnt = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(pstmt);
+		}
+		if(cnt != 1) {	// 업데이트 안된경우(조회수 안늘어나는 경우)
+			System.out.println("## 클릭 수 증가 실패 ##");
+		}
+		
+		sql = bSQL.getSQL(bSQL.SEL_CONT);
+		pstmt = db.getPstmt(con, sql);
+		try {
+			pstmt.setInt(1, bno);
+			rs = pstmt.executeQuery();
+			ArrayList<FileVO> list = new ArrayList<FileVO>();
+			
+			for(int i=0; rs.next(); i++) {
+				FileVO fVO = new FileVO();
+				if(rs.getInt("bino") != 0) {
+					fVO.setBino(rs.getInt("bino"));
+					fVO.setOriname(rs.getString("oriname"));
+					fVO.setSavename(rs.getString("savename"));
+				}
+				list.add(fVO);
+				if(i != 0) continue;
+				
+				bVO.setBno(rs.getInt("bno"));
+				bVO.setTitle(rs.getString("title"));
+				bVO.setBody(rs.getString("body").replaceAll("\r\n", "<br>"));	// 줄바꿈 jsp처리
+				bVO.setName(rs.getString("name"));
+				bVO.setbDate(rs.getDate("bdate"));
+				bVO.setbTime(rs.getTime("bdate"));
+				bVO.setSdate();
+				bVO.setClick(rs.getInt("click"));
+			}
+			bVO.setFile(list);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(rs);
+			db.close(pstmt);
+			db.close(con);
+		}
+		return bVO;
 	}
 	
 	// 게시판 테이블 글 등록 데이터베이스작업 전담처리 함수
@@ -117,35 +231,4 @@ public class BoardDAO {
 		
 	}
 	
-	// 게시판
-	public ArrayList<BoardVO> asdf(){
-		ArrayList<BoardVO> list = new ArrayList<BoardVO>();
-		con = db.getCon();
-		String sql = bSQL.getSQL(bSQL.SEL_ALL_LIST);
-		stmt = db.getStmt(con);
-		try {
-			rs = stmt.executeQuery(sql);
-			while(rs.next()) {
-				BoardVO bVO = new BoardVO();
-				bVO.setBno(rs.getInt("bno"));
-				bVO.setTitle(rs.getString("title"));
-				bVO.setId(rs.getString("bmno"));
-				bVO.setbDate(rs.getDate("bDate"));
-				bVO.setbTime(rs.getTime("bDate"));
-				bVO.setSdate();
-				bVO.setClick(rs.getInt("click"));
-				
-				list.add(bVO);
-			}
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-			db.close(rs);
-			db.close(stmt);
-			db.close(con);
-		}
-		
-		return list;
-	}
 }

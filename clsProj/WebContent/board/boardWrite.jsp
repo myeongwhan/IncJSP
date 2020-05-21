@@ -33,7 +33,10 @@
 			$('#frm').submit();
 		});
 		
-		addTg();
+		$('.file').change(function(){
+			addTg();
+			//alert(cnt);
+		})
 		
 		$('#cancel').click(function(){
 			$(location).attr('href', '/clsProj/board/board.cls');
@@ -53,8 +56,8 @@
                 </div>
             </div>
             <div class="w3-row w3-margin-top w3-left-align box">
-                <!-- 
                 <input class="file w3-border w3-input" type="file" name="file1">
+                <!-- 
                 <input class="file w3-border w3-input" type="file" name="file2">
                 <input class="file w3-border w3-input" type="file" name="file3">
                 <input class="file w3-border w3-input" type="file" name="file4">

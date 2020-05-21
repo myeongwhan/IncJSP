@@ -2,6 +2,8 @@ package com.increpas.www.sql;
 
 public class BoardSQL {
 	public final int SEL_ALL_LIST = 1001;
+	public final int SEL_TOTAL_CNT = 1002;
+	public final int SEL_CONT = 1003;
 	
 	public final int EDIT_CLICK_BRD = 2001;
 	
@@ -10,11 +12,49 @@ public class BoardSQL {
 	public String getSQL(int code) {
 		StringBuffer buff = new StringBuffer();
 		switch(code) {
+		case SEL_TOTAL_CNT:
+			buff.append("SELECT ");
+			buff.append("	count(*) cnt ");
+			buff.append("FROM ");
+			buff.append("	board ");
+			buff.append("WHERE ");
+			buff.append("	isshow = 'Y' ");
+			
+			break;
+		case SEL_CONT:
+			buff.append("SELECT ");
+			buff.append("	bno, title, name, body, bdate, click, ");
+			buff.append("	NVL(bino, 0) bino, NVL(oriname, 'none') oriname, NVL(savename, 'none') savename ");
+			buff.append("FROM ");
+			buff.append("	board, brdimage, member ");
+			buff.append("WHERE ");
+			buff.append("	bmno = mno ");
+			buff.append("	AND bno = bi_bno(+) ");
+			buff.append("	AND bno = ? ");
+			
+			break;
 		case SEL_ALL_LIST:
-			buff.append("select "); 
-			buff.append("    bno, title, bmno, bdate, click "); 
-			buff.append("from "); 
-			buff.append("    board "); 
+			buff.append("SELECT "); 
+			buff.append("    rno, bno, title, name, bdate, click "); 
+			buff.append("FROM "); 
+			buff.append("    ( "); 
+			buff.append("    SELECT "); 
+			buff.append("        ROWNUM rno, bno, title, name, bdate, click "); 
+			buff.append("    FROM "); 
+			buff.append("        ( "); 
+			buff.append("        SELECT "); 
+			buff.append("            bno, title, name, bdate, click "); 
+			buff.append("        FROM "); 
+			buff.append("            board, member "); 
+			buff.append("         WHERE "); 
+			buff.append("            board.isshow = 'Y' "); 
+			buff.append("            AND bmno = mno "); 
+			buff.append("        ORDER BY "); 
+			buff.append("            bdate DESC "); 
+			buff.append("        ) "); 
+			buff.append("    ) "); 
+			buff.append("WHERE "); 
+			buff.append("    rno BETWEEN ? AND ? ");
 			
 			break;
 		case EDIT_CLICK_BRD:

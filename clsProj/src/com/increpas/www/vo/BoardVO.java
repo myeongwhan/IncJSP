@@ -3,13 +3,22 @@ package com.increpas.www.vo;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class BoardVO {
 	private int rno, bno, mno, click;
-	private String title, id, body, sdate;
+	private String title, id, name, body, sdate;
 	private Date bDate;
 	private Time bTime;
 	
+	private ArrayList<FileVO> file;
+	
+	public ArrayList<FileVO> getFile() {
+		return file;
+	}
+	public void setFile(ArrayList<FileVO> file) {
+		this.file = file;
+	}
 	public int getRno() {
 		return rno;
 	}
@@ -45,6 +54,12 @@ public class BoardVO {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getBody() {
 		return body;
