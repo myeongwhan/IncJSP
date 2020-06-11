@@ -40,6 +40,8 @@
 				url = '/clsProj/survey/survey.cls';
 			} else if(tid == 'surveyAdd'){
 				url = '/clsProj/survey/surveyAdd.cls';
+			} else if(tid == 'empList'){
+				url = '/clsProj/ajax/empList.cls';
 			}
 			
 			$(location).attr('href', url);
@@ -56,16 +58,16 @@
 				<div class="btn w-150 inblock w3-button w3-green w-margin" id="login">Login</div>
 				<div class="btn w-150 inblock w3-button w3-light-green w-margin" id="join">Join</div>
 				<div class="btn w-150 inblock w3-button w3-pink w-margin" id="gBoard">gBoard</div>
-				<div class="btn w-150 inblock w3-button w3-orange w-margin" id="reBoard">reBoard</div>
 			</c:if>
 			<c:if test="${not empty SID }">
 				<div class="btn w-150 inblock w3-button w3-red w-margin" id="logout">Logout</div>
 				<div class="btn w-150 inblock w3-button w3-pink w-margin" id="gBoard">gBoard</div>
-				<div class="btn w-150 inblock w3-button w3-orange w-margin" id="reBoard">reBoard</div>
-				<div class="btn w-150 inblock w3-button w3-purple w-margin" id="Board">Board</div>
 				<div class="btn w-150 inblock w3-button w3-black w-margin" id="survey">survey</div>
 				<div class="btn w-150 inblock w3-button w3-gray w-margin" id="surveyAdd">surveyAdd</div>
+				<div class="btn w-150 inblock w3-button w3-purple w-margin" id="Board">Board</div>
 			</c:if>
+				<div class="btn w-150 inblock w3-button w3-orange w-margin" id="reBoard">reBoard</div>
+				<div class="btn w-150 inblock w3-button w3-indigo w-margin" id="empList">empList</div>
 		</div>
 	</div>
 </body>

@@ -98,7 +98,7 @@ $(document).ready(function(){
 	});
 	$('#hbtn').click(function(){
 //		alert('홈으로돌아감 홈링크안만듦');
-		
+		$(location).attr('href', '/clsProj/main.cls');
 	});
 	
 });

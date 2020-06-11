@@ -106,15 +106,25 @@ public class Dispatch extends HttpServlet {
 		req.setAttribute("isRedirect", false);
 		String view = cls.exec(req, resp);
 //		System.out.println("*************** " + view);
-		boolean bool = false;
-		bool = (boolean) req.getAttribute("isRedirect");
-		if(bool) {
+		Boolean bool;	// null데이터는 채워지지 않기 때문에 refer클래스로 처리
+		try {
+			bool = (boolean) req.getAttribute("isRedirect");
+		} catch(Exception e) {
+			bool = null;
+		}
+		if(bool == null) {	// dispatch에서 ajax처리
+			PrintWriter pw = resp.getWriter();
+			try {
+				pw.println(view);
+			} catch(Exception e) {}
+		} else if(bool == true) {
 			/*
 			String last = view.substring(view.lastIndexOf(".")+1);
 			if(last.equals("cls")) {
-				*/
-				resp.sendRedirect(view);
-		} else {
+			 */
+			resp.sendRedirect(view);
+		}
+		else {
 			try {
 				RequestDispatcher rd = req.getRequestDispatcher(view);
 				rd.forward(req, resp);

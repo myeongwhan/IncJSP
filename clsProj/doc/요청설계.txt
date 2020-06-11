@@ -150,3 +150,17 @@
 	컨트롤러: com.increpas.www.controller.board.BoardDetail
 	뷰		: /board/boardDetail.jsp
 ---------------------------------------------------------------
+---------------------------------------------------------------
+#. 사원 정보 요청
+1. 사원 리스트 페이지 요청
+	요청내용: /ajax/empList.cls
+	파라미터: 
+	컨트롤러: com.increpas.www.controller.ajax.EmpList
+	뷰		: /ajax/empList.jsp
+---------------------------------------------------------------
+2. 사원 상세 정보 페이지 요청
+	요청내용: /ajax/empInfo.cls
+	파라미터: eno
+	컨트롤러: com.increpas.www.controller.ajax.EmpInfo
+	뷰		: none( json )
+---------------------------------------------------------------
